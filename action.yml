@@ -20,7 +20,7 @@ runs:
     - shell: bash
       run: >
         PROBLEM=$(
-          echo ${{ toJson(inputs.pull_request.body) }} |
+          echo ${{ toJson(fromJson(inputs.pull_request).body) }} |
           grep -Pio 'http[\w\:\/\.-]+' |
           head -1
         );
