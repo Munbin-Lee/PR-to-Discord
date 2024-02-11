@@ -20,24 +20,32 @@ runs:
     - shell: bash
       env:
         BODY: ${{ toJson(fromJson(inputs.pull_request).body) }}
+        USERNAME: ${{ toJson(fromJson(inputs.pull_request).user.login) }}
+        AVATAR_URL: ${{ toJson(fromJson(inputs.pull_request).user.avatar_url) }}
+        TITLE: ${{ toJson(fromJson(inputs.pull_request).title) }}
+        URL: ${{ toJson(fromJson(inputs.pull_request).html_url) }}
       run: >
         PROBLEM=$(
           echo $BODY |
           grep -Pio 'http[\w\:\/\.-]+' |
           head -1
         );
-        echo "PROBLEM=$PROBLEM" >> $GITHUB_ENV
+        echo "PROBLEM=$PROBLEM" >> $GITHUB_ENV;
+        echo "USERNAME=$USERNAME" >> $GITHUB_ENV;
+        echo "AVATAR_URL=$AVATAR_URL" >> $GITHUB_ENV;
+        echo "TITLE=$TITLE" >> $GITHUB_ENV;
+        echo "URL=$URL" >> $GITHUB_ENV;
     - shell: bash
       env:
         DATA: >
           {
-            "username": ${{ toJson(fromJson(inputs.pull_request).user.login) }},
-            "avatar_url": ${{ toJson(fromJson(inputs.pull_request).user.avatar_url) }},
+            "username": ${{ env.USERNAME }},
+            "avatar_url": ${{ env.AVATAR_URL }},
             "embeds": [
               {
-                "title": ${{ toJson(fromJson(inputs.pull_request).title) }},
+                "title": ${{ env.TITLE }},
                 "description": "새로운 PR이 도착했습니다!\n\n${{ env.PROBLEM }}",
-                "url": ${{ toJson(fromJson(inputs.pull_request).html_url) }},
+                "url": ${{ env.URL }},
                 "color": 6847432
               }
             ]
