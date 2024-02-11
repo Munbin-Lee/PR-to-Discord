@@ -1,0 +1,35 @@
+name: 'PR to Discord'
+author: 'Munbin-Lee'
+description: 'sends PR notifications to Discord.'
+branding:
+  icon: 'award'
+  color: 'blue'
+
+inputs:
+  discord_webhook_url:
+    description: 'webhook URL of a Discord channel.'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - shell: bash
+      env:
+        DATA: >
+          {
+            "username": "test username",
+            "avatar_url": "https://i.imgur.com/IWDCkc6.jpeg",
+            "embeds": [
+              {
+                "title": "test title",
+                "description": "test description",
+                "url": "https://i.imgur.com/IWDCkc6.jpeg",
+                "color": 6847432
+              }
+            ]
+          }
+      run: >
+        curl -X
+        POST -H 'Content-type:application/json'
+        -d "$DATA"
+        ${{ inputs.discord_webhook_url }}
