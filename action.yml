@@ -29,7 +29,8 @@ runs:
           echo $BODY |
           grep -Pio 'http[\w\:\/\.-]+' |
           head -1 ||
-          echo "$URL"
+          echo "$URL" |
+          tr -d '"'
         );
         echo "PROBLEM=$PROBLEM" >> $GITHUB_ENV;
         echo "USERNAME=$USERNAME" >> $GITHUB_ENV;
