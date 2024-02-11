@@ -22,12 +22,12 @@ runs:
         DATA: >
           {
             "username": ${{ toJson(fromJson(inputs.pull_request).user.login) }},
-            "avatar_url": "https://i.imgur.com/IWDCkc6.jpeg",
+            "avatar_url": ${{ toJson(fromJson(inputs.pull_request).user.avatar_url) }},
             "embeds": [
               {
-                "title": "test title",
+                "title": ${{ toJson(fromJson(inputs.pull_request).title) }},
                 "description": "test description",
-                "url": "https://i.imgur.com/IWDCkc6.jpeg",
+                "url": ${{ toJson(fromJson(inputs.pull_request).html_url) }},
                 "color": 6847432
               }
             ]
