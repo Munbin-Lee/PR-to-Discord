@@ -18,9 +18,11 @@ runs:
   using: 'composite'
   steps:
     - shell: bash
+      env:
+        BODY: ${{ toJson(fromJson(inputs.pull_request).body) }}
       run: >
         PROBLEM=$(
-          echo ${{ toJson(fromJson(inputs.pull_request).body) }} |
+          echo $BODY |
           grep -Pio 'http[\w\:\/\.-]+' |
           head -1
         );
