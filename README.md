@@ -1,4 +1,4 @@
-# PR-to-Discord
+# PR to Discord
 
 Sends Pull request notification message to Discord.
 
@@ -15,7 +15,7 @@ Sends Pull request notification message to Discord.
 name: PR to Discord
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, reopened]
 
 jobs:
