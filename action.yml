@@ -28,7 +28,8 @@ runs:
         PROBLEM=$(
           echo $BODY |
           grep -Pio 'http[\w\:\/\.-]+' |
-          head -1
+          head -1 ||
+          echo "No Link Found."
         );
         echo "PROBLEM=$PROBLEM" >> $GITHUB_ENV;
         echo "USERNAME=$USERNAME" >> $GITHUB_ENV;
