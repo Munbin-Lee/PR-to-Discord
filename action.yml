@@ -27,7 +27,7 @@ runs:
       run: >
         PROBLEM=$(
           echo $BODY |
-          grep -Pio 'http[\w\:\/\.-]+' |
+          grep -Pio 'http[\w\:\/\.\-\?\=\&]+' |
           head -1 ||
           echo "$URL" |
           tr -d '"'
